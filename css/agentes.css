@@ -1,0 +1,190 @@
+/* public/css/agentes.css */
+
+.ag-controles {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.ag-controles input {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  min-width: 220px;
+}
+
+.ag-info {
+  background: rgba(79, 158, 255, 0.08);
+  border: 1px solid rgba(79, 158, 255, 0.25);
+  border-radius: 6px;
+  padding: 12px 14px;
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 20px;
+}
+
+.ag-info b { color: var(--accent); }
+
+.ag-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.ag-stat {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+  border-radius: 8px;
+}
+
+.ag-stat .s-label {
+  color: var(--text-dim);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.ag-stat .s-valor {
+  font-size: 22px;
+  font-weight: 800;
+  font-family: 'Monaco', 'Consolas', monospace;
+}
+
+.ag-stat.incluidos .s-valor { color: var(--green); }
+.ag-stat.excluidos .s-valor { color: var(--red); }
+
+.ag-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: border-color 0.15s;
+}
+
+.ag-card.excluido {
+  opacity: 0.45;
+}
+
+.ag-card.excluido .ag-nome {
+  text-decoration: line-through;
+}
+
+.ag-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--purple));
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ag-card.excluido .ag-avatar {
+  background: var(--border-2);
+}
+
+.ag-info-pessoa {
+  flex: 1;
+  min-width: 0;
+}
+
+.ag-nome {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.ag-detalhe {
+  color: var(--text-dim);
+  font-size: 11px;
+  font-family: 'Monaco', 'Consolas', monospace;
+}
+
+.ag-casos {
+  font-size: 11px;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-family: 'Monaco', 'Consolas', monospace;
+}
+
+.ag-casos.com {
+  background: rgba(79, 158, 255, 0.1);
+  border-color: rgba(79, 158, 255, 0.3);
+  color: var(--accent);
+}
+
+/* Switch toggle */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch-slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background: var(--border-2);
+  border-radius: 24px;
+  transition: 0.2s;
+}
+
+.switch-slider::before {
+  content: '';
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.2s;
+}
+
+.switch input:checked + .switch-slider {
+  background: var(--green);
+}
+
+.switch input:checked + .switch-slider::before {
+  transform: translateX(22px);
+}
+
+.switch-label {
+  font-size: 11px;
+  color: var(--text-dim);
+  min-width: 70px;
+  text-align: right;
+  font-weight: 600;
+}
+
+.switch-label.on { color: var(--green); }
+.switch-label.off { color: var(--red); }

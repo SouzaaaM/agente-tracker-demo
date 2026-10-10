@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agente Tracker — Demo</title>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/historico.css" />
+  <link rel="stylesheet" href="css/jornada.css" />
+  <link rel="stylesheet" href="css/comparar.css" />
+  <link rel="stylesheet" href="css/sem-atividade.css" />
+  <link rel="stylesheet" href="css/relatorios.css" />
+  <link rel="stylesheet" href="css/agentes.css" />
+  <link rel="stylesheet" href="css/fila.css" />
+  <link rel="stylesheet" href="css/duplicados.css" />
+  <link rel="stylesheet" href="css/telegram.css" />
+  <link rel="stylesheet" href="css/autonomo.css" />
+</head>
+<body>
+<div class="demo-banner">🧪 <b>Versão demo</b> — todos os dados são fictícios e gerados no navegador. Nenhum sistema real está conectado.</div>
+<style>
+  .demo-banner{position:sticky;top:0;z-index:50;background:#3b2a05;color:#f5c451;border-bottom:1px solid #6b4e0b;padding:8px 16px;font-size:13px;text-align:center;font-family:'Segoe UI',sans-serif}
+</style>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sb-logo">
+      <div class="sb-logo-icon">👥</div>
+      <div>
+        <div class="sb-logo-title">Agente Tracker</div>
+        <div class="sb-logo-sub">v3 · versão demo</div>
+      </div>
+    </div>
+    <div class="sb-label">Visão</div>
+    <div class="sb-nav">
+      <button class="sb-nav-item active" data-tab="ranking"><span class="sb-icon">🏆</span>Ranking</button>
+      <button class="sb-nav-item" data-tab="agentes"><span class="sb-icon">👥</span>Agentes</button>
+      <button class="sb-nav-item" data-tab="casos"><span class="sb-icon">📋</span>Casos</button>
+      <button class="sb-nav-item" data-tab="historico"><span class="sb-icon">📈</span>Histórico</button>
+      <button class="sb-nav-item" data-tab="jornada"><span class="sb-icon">⏰</span>Jornada</button>
+      <button class="sb-nav-item" data-tab="comparar"><span class="sb-icon">⚖️</span>Comparar</button>
+      <button class="sb-nav-item" data-tab="inatividade"><span class="sb-icon">🚨</span>Sem atividade</button>
+      <button class="sb-nav-item" data-tab="relatorios"><span class="sb-icon">📑</span>Relatórios</button>
+    </div>
+    <div class="sb-label">Fila & Duplicatas</div>
+    <div class="sb-nav">
+      <button class="sb-nav-item" data-tab="fila"><span class="sb-icon">📊</span>Fila</button>
+      <button class="sb-nav-item" data-tab="duplicados"><span class="sb-icon">👥</span>Duplicados</button>
+    </div>
+    <div class="sb-label">Automação</div>
+    <div class="sb-nav">
+      <button class="sb-nav-item" data-tab="autonomo"><span class="sb-icon">🚀</span>Autônomo</button>
+      <button class="sb-nav-item tg-tab" data-tab="telegram"><span class="sb-icon">✈️</span>Telegram</button>
+    </div>
+    <div class="sb-bottom">
+      <div class="sb-field-label">Agente</div>
+      <select id="agente-select" onchange="AT.onAgenteChange()"><option value="">— Selecione —</option></select>
+      <div class="sb-row">
+        <label class="sb-field-label" style="margin: 0;">Parado há</label>
+        <select id="parado-dias" onchange="AT.onParadoDiasChange()">
+          <option value="1">1d</option><option value="2">2d</option><option value="3" selected>3d</option>
+          <option value="7">7d</option><option value="14">14d</option>
+        </select>
+      </div>
+      <button class="sb-refresh" onclick="AT.recarregarTudo()">⟳ Atualizar</button>
+    </div>
+  </aside>
+
+  <main>
+    <section id="tab-ranking" class="active">
+      <h2>🏆 Ranking de agentes</h2>
+      <p class="subtitle">Mais ignorados primeiro. Clique numa linha pra abrir os casos.</p>
+      <div id="ranking-summary" class="summary-bar"></div>
+      <table class="tbl">
+        <thead><tr><th style="width:60px;">#</th><th>Agente</th><th class="center">🔴 Ign.</th><th class="center">💤 Par.</th><th class="center">🟡 Agu.</th><th class="center">🟢 And.</th><th class="center">Total</th></tr></thead>
+        <tbody><tr><td colspan="7" class="loading">Carregando…</td></tr></tbody>
+      </table>
+    </section>
+
+    <section id="tab-casos">
+      <div id="casos-empty" class="empty"><div class="emoji">👆</div><p>Selecione um agente na sidebar</p></div>
+      <div id="casos-content" style="display: none;">
+        <h2 id="casos-titulo">Casos</h2>
+        <p class="subtitle"><span id="casos-qtd-titulo"></span></p>
+        <div class="kpi-cards">
+          <div class="kpi-card parado" data-situacao="parado" onclick="AT.tabs.casos.filtrarSituacao('parado')"><div class="kpi-icon">💤</div><div class="kpi-value" id="kpi-parado">0</div><div class="kpi-label">Parados</div></div>
+          <div class="kpi-card aguardando" data-situacao="aguardando" onclick="AT.tabs.casos.filtrarSituacao('aguardando')"><div class="kpi-icon">🟡</div><div class="kpi-value" id="kpi-aguardando">0</div><div class="kpi-label">Aguardando</div></div>
+          <div class="kpi-card ignorado" data-situacao="ignorado" onclick="AT.tabs.casos.filtrarSituacao('ignorado')"><div class="kpi-icon">🔴</div><div class="kpi-value" id="kpi-ignorado">0</div><div class="kpi-label">Ignorados</div></div>
+          <div class="kpi-card andamento" data-situacao="em_andamento" onclick="AT.tabs.casos.filtrarSituacao('em_andamento')"><div class="kpi-icon">🟢</div><div class="kpi-value" id="kpi-andamento">0</div><div class="kpi-label">Em andamento</div></div>
+        </div>
+        <div class="filtros-bar">
+          <span class="label-dim">Categoria:</span>
+          <span class="filtro-pill active" data-cat="" onclick="AT.tabs.casos.filtrarCategoria('')">Todas</span>
+          <span class="filtro-pill cb" data-cat="ClickBank" onclick="AT.tabs.casos.filtrarCategoria('ClickBank')">ClickBank</span>
+          <span class="filtro-pill" data-cat="Orgânico" onclick="AT.tabs.casos.filtrarCategoria('Orgânico')">Orgânico</span>
+        </div>
+        <table class="tbl">
+          <thead><tr><th style="width:110px;">Caso</th><th>Cliente</th><th style="width:110px;">Categoria</th><th>Última msg</th><th style="width:110px;">Tempo</th><th style="width:160px;">Ações</th></tr></thead>
+          <tbody id="tbody-casos"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="tab-historico">
+      <div id="historico-empty" class="empty"><div class="emoji">👆</div><p>Selecione um agente na sidebar</p></div>
+      <div id="historico-content" style="display: none;">
+        <h2>📈 Histórico — <span id="historico-titulo"></span></h2>
+        <p class="subtitle">Mensagens e conversas atendidas por dia.</p>
+        <div class="historico-controles">
+          <label class="label-dim">Período:</label>
+          <select id="historico-dias" onchange="AT.tabs.historico.load()"><option value="7">7 dias</option><option value="30" selected>30 dias</option><option value="90">90 dias</option></select>
+        </div>
+        <div class="grafico-wrapper"><h3>📊 Mensagens por dia</h3><div class="barras" id="barras-container"></div></div>
+        <div class="grafico-wrapper">
+          <h3>📈 Tendência (passe o mouse nos pontos)</h3>
+          <svg class="linha-grafico" id="linha-svg"></svg>
+          <div class="grafico-legenda">
+            <div class="legenda-item"><span class="legenda-dot msgs"></span>Mensagens</div>
+            <div class="legenda-item"><span class="legenda-dot convs"></span>Conversas atendidas</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-jornada">
+      <div id="jornada-empty" class="empty"><div class="emoji">👆</div><p>Selecione um agente na sidebar</p></div>
+      <div id="jornada-content" style="display: none;">
+        <h2>⏰ Jornada — <span id="jornada-titulo"></span></h2>
+        <p class="subtitle">Horários de trabalho, primeira/última mensagem, buracos de inatividade e almoço.</p>
+        <div class="jornada-controles">
+          <label class="label-dim">Semana:</label>
+          <select id="jornada-semana" onchange="AT.tabs.jornada.load()"><option value="atual">Esta semana</option><option value="passada">Semana passada</option></select>
+        </div>
+        <div id="jornada-dias-container"></div>
+      </div>
+    </section>
+
+    <section id="tab-comparar">
+      <h2>⚖️ Comparar agentes</h2>
+      <p class="subtitle">Até 4 agentes lado a lado.</p>
+      <div class="comparar-controles">
+        <select id="comparar-select"><option value="">— Adicionar agente —</option></select>
+        <button class="primary" onclick="AT.tabs.comparar.adicionar()">+ Adicionar</button>
+        <button onclick="AT.tabs.comparar.limpar()">Limpar</button>
+      </div>
+      <div class="comparar-chips" id="comparar-chips"></div>
+      <div id="comparar-resultado" class="comparar-grid"></div>
+    </section>
+
+    <section id="tab-inatividade">
+      <h2>🚨 Sem atividade hoje</h2>
+      <p class="subtitle">Agentes que não mandaram mensagem ou sumiram no expediente.</p>
+      <div class="sa-controles">
+        <label class="label-dim">Considerar "sumiu" após:</label>
+        <select id="sa-horas" onchange="AT.tabs['sem-atividade'].load()">
+          <option value="0.5">30 min</option><option value="1">1 hora</option><option value="2" selected>2 horas</option><option value="3">3 horas</option><option value="4">4 horas</option>
+        </select>
+      </div>
+      <div class="sa-info">ℹ️ Contagem considera apenas <b>horário comercial</b> (seg-sex, 9h-18h) e desconta o horário de <b>almoço</b> (12:30-14:00).</div>
+      <div id="sa-fora-horario" class="sa-fora-horario" style="display: none;"></div>
+      <div id="sa-grupos-wrap">
+        <div class="sa-grupo"><div class="sa-grupo-header"><span class="sa-grupo-titulo vermelho">🔴 Sem NENHUMA mensagem hoje</span><span class="sa-contador" id="sa-cnt-nenhuma">0</span></div><div id="sa-lista-vazia"></div></div>
+        <div class="sa-grupo"><div class="sa-grupo-header"><span class="sa-grupo-titulo laranja">🟠 Mandou mas sumiu</span><span class="sa-contador" id="sa-cnt-sumiu">0</span></div><div id="sa-lista-sumiu"></div></div>
+      </div>
+    </section>
+
+    <section id="tab-relatorios">
+      <h2>📑 Relatórios</h2>
+      <p class="subtitle">Gere relatórios em Excel com análises dos agentes.</p>
+      <div class="rel-meta">ℹ️ Meta de mensagens semanal: <b>80 msgs</b> por agente. Mensagens privadas não são contadas. O agente de IA é excluído dos relatórios.</div>
+      <div id="rel-cards" class="rel-grid">
+        <div class="rel-card">
+          <h3>🚨 Casos sem resposta</h3>
+          <p class="rel-desc">Lista os casos onde o cliente mandou mensagem e o agente ainda não respondeu. Usa o filtro "Parado há" da sidebar.</p>
+          <div class="rel-botoes"><button class="rel-btn primary" onclick="AT.tabs.relatorios.baixarCasos()">📥 Baixar Excel</button></div>
+        </div>
+        <div class="rel-card">
+          <h3>📊 Análise Agentes (seg-dom)</h3>
+          <p class="rel-desc">Quantidade de mensagens respondidas por cada agente na semana. Tabela com gradiente laranja — mais perto da meta = laranja mais escuro.</p>
+          <div class="rel-botoes">
+            <button class="rel-btn primary" onclick="AT.tabs.relatorios.baixarAnalise('atual')">📥 Semana atual</button>
+            <button class="rel-btn" onclick="AT.tabs.relatorios.baixarAnalise('passada')">📥 Semana passada</button>
+          </div>
+        </div>
+        <div class="rel-card">
+          <h3>📑 Resumo por Agente</h3>
+          <p class="rel-desc">Tabela compacta com a contagem de cada tipo (Ignorado / Aguardando / Parado / Em andamento) por agente.</p>
+          <div class="rel-botoes"><button class="rel-btn primary" onclick="AT.tabs.relatorios.baixarResumo()">📥 Baixar Excel</button></div>
+        </div>
+        <div class="rel-card">
+          <h3>📊 Relatório da Fila</h3>
+          <p class="rel-desc">Casos novos por dia, separados por time e por origem (ClickBank / IA / Orgânico).</p>
+          <div class="rel-opcoes">
+            <div class="rel-campo"><label class="label-dim">De:</label><input type="date" id="rel-fila-de" /></div>
+            <div class="rel-campo"><label class="label-dim">Até:</label><input type="date" id="rel-fila-ate" /></div>
+          </div>
+          <div class="rel-botoes"><button class="rel-btn primary" onclick="AT.tabs.relatorios.baixarFila()">📥 Baixar Excel</button></div>
+        </div>
+        <div class="rel-card">
+          <h3>📊 Dia a Dia Agentes</h3>
+          <p class="rel-desc">Mensagens por agente por dia no período escolhido. Gera uma aba por semana.</p>
+          <div class="rel-opcoes">
+            <div class="rel-campo"><label class="label-dim">De:</label><input type="date" id="rel-ddia-de" /></div>
+            <div class="rel-campo"><label class="label-dim">Até:</label><input type="date" id="rel-ddia-ate" /></div>
+          </div>
+          <div class="rel-botoes"><button class="rel-btn primary" onclick="AT.tabs.relatorios.baixarDiaDia()">📥 Baixar Excel</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-fila">
+      <h2>📊 Fila de casos</h2>
+      <p class="subtitle">Casos novos abertos nos últimos dias, agrupados por time.</p>
+      <div class="fila-controles">
+        <label class="label-dim">Período:</label>
+        <select id="fila-dias" onchange="AT.tabs.fila.load()"><option value="3">3 dias</option><option value="7" selected>7 dias</option><option value="14">14 dias</option><option value="30">30 dias</option></select>
+      </div>
+      <div id="fila-container"></div>
+    </section>
+
+    <section id="tab-duplicados">
+      <h2>👥 Clientes duplicados</h2>
+      <p class="subtitle">Clientes com mais de 1 conversa aberta. Clica pra expandir e ver quem são os agentes.</p>
+      <div class="dup-stats">
+        <div class="dup-stat"><div class="s-label">👥 Clientes duplicados</div><div class="s-valor" id="dup-stat-clientes">0</div></div>
+        <div class="dup-stat"><div class="s-label">💬 Total de conversas</div><div class="s-valor" id="dup-stat-conversas">0</div></div>
+        <div class="dup-stat"><div class="s-label">📈 Máximo por cliente</div><div class="s-valor" id="dup-stat-max">0</div></div>
+      </div>
+      <div id="dup-container"></div>
+    </section>
+
+    <section id="tab-autonomo">
+      <h2>🚀 Cobrança Autônoma</h2>
+      <p class="subtitle">Bot cobra agentes automaticamente em horário comercial. Configure abaixo.</p>
+      <div id="aut-container">
+        <div id="aut-alerta-comercial" class="aut-alerta" style="display:none;">⏸️ Fora do horário comercial. O bot só dispara entre 9h-18h, dias úteis.</div>
+        <div id="aut-alerta-tg" class="aut-alerta erro" style="display:none;">❌ Bot do Telegram OFFLINE. Vá na aba ✈️ Telegram.</div>
+        <div class="bot-geral-card" id="bot-geral-card">
+          <label class="toggle-big"><input type="checkbox" id="bot-geral-toggle" onchange="AT.tabs.autonomo.toggleBotGeral()"/><span class="slider"></span></label>
+          <div><div class="status-texto off" id="bot-geral-status">DESLIGADO</div><div style="color:var(--text-dim);font-size:12px;">Switch principal — se desligar, nada dispara</div></div>
+          <div class="sub-info" id="bot-geral-info"></div>
+        </div>
+        <div id="status-disparo-bar" class="status-disparo-bar parado" style="display:none;">
+          <span class="status-disparo-icon">📊</span>
+          <div class="status-disparo-texto" id="status-disparo-texto">Sem disparos hoje</div>
+          <button class="btn-historico" onclick="AT.tabs.autonomo.abrirHistorico()">📜 Histórico <span class="badge" id="hist-badge">0</span></button>
+        </div>
+        <div class="hist-modal-overlay" id="hist-modal-overlay" onclick="AT.tabs.autonomo.fecharHistoricoSeOverlay(event)">
+          <div class="hist-modal">
+            <div class="hist-modal-header"><h3>📜 Histórico de disparos — <span id="hist-data">hoje</span></h3><button class="hist-modal-close" onclick="AT.tabs.autonomo.fecharHistorico()">✕</button></div>
+            <div class="hist-modal-body" id="hist-modal-body"></div>
+          </div>
+        </div>
+        <div class="tipo-bloco parado">
+          <div class="tipo-bloco-header"><span class="icone">💤</span><h3>Casos Parados</h3><label class="switch-mini"><input type="checkbox" id="tipo-parado-ativo" onchange="AT.tabs.autonomo.salvarTipoAtivo('parado')"/><span class="slider"></span></label></div>
+          <div class="tipo-bloco-config">
+            <label>⏰ Horários:</label><div class="horarios-chips" id="tipo-parado-horarios"></div>
+            <button type="button" class="btn-add-hora" onclick="AT.tabs.autonomo.adicionarHorario('parado')">+ hora</button>
+            <label>📅 Parado há:</label>
+            <select id="parado-minutos" class="aut-select" onchange="AT.tabs.autonomo.salvarParadoMinutos()">
+              <option value="60">≥1 hora</option><option value="240">≥4 horas</option><option value="480">≥8 horas</option>
+              <option value="720">≥12 horas</option><option value="1440" selected>≥1 dia</option><option value="4320">≥3 dias</option><option value="10080">≥7 dias</option>
+            </select>
+            <button class="btn-disparar-novos" onclick="AT.tabs.autonomo.dispararAgora('parado',false)">🚀 Só novos</button>
+            <button class="btn-disparar-todos" onclick="AT.tabs.autonomo.dispararAgora('parado',true)">🔄 TODOS</button>
+          </div>
+          <div class="tipo-bloco-resultado" id="res-parado" style="display:none"></div>
+        </div>
+        <div class="tipo-bloco aguardando">
+          <div class="tipo-bloco-header"><span class="icone">🟡</span><h3>Aguardando primeiro contato</h3><label class="switch-mini"><input type="checkbox" id="tipo-aguardando-ativo" onchange="AT.tabs.autonomo.salvarTipoAtivo('aguardando')"/><span class="slider"></span></label></div>
+          <div class="tipo-bloco-config">
+            <label>⏰ Horários:</label><div class="horarios-chips" id="tipo-aguardando-horarios"></div>
+            <button type="button" class="btn-add-hora" onclick="AT.tabs.autonomo.adicionarHorario('aguardando')">+ hora</button>
+            <button class="btn-disparar-novos" onclick="AT.tabs.autonomo.dispararAgora('aguardando',false)">🚀 Só novos</button>
+            <button class="btn-disparar-todos" onclick="AT.tabs.autonomo.dispararAgora('aguardando',true)">🔄 TODOS</button>
+          </div>
+          <div class="tipo-bloco-resultado" id="res-aguardando" style="display:none"></div>
+        </div>
+        <div class="tipo-bloco ignorado">
+          <div class="tipo-bloco-header"><span class="icone">🔴</span><h3>Ignorados</h3><label class="switch-mini"><input type="checkbox" id="tipo-ignorado-ativo" onchange="AT.tabs.autonomo.salvarTipoAtivo('ignorado')"/><span class="slider"></span></label></div>
+          <div class="tipo-bloco-config">
+            <label>⏰ Horários:</label><div class="horarios-chips" id="tipo-ignorado-horarios"></div>
+            <button type="button" class="btn-add-hora" onclick="AT.tabs.autonomo.adicionarHorario('ignorado')">+ hora</button>
+            <button class="btn-disparar-novos" onclick="AT.tabs.autonomo.dispararAgora('ignorado',false)">🚀 Só novos</button>
+            <button class="btn-disparar-todos" onclick="AT.tabs.autonomo.dispararAgora('ignorado',true)">🔄 TODOS</button>
+          </div>
+          <div class="tipo-bloco-resultado" id="res-ignorado" style="display:none"></div>
+        </div>
+        <div class="relatorio-card">
+          <h3>📊 Relatório Diário — Telegram</h3>
+          <div class="explica">Resumo do dia com todas as cobranças disparadas, enviado pros admins no horário configurado.</div>
+          <div class="row">
+            <label><input type="checkbox" id="rel-diario-ativo" onchange="AT.tabs.autonomo.salvarRelatorioConfig()"/> Ativo</label>
+            <label>⏰ Horário:</label>
+            <input type="time" id="rel-diario-horario" onchange="AT.tabs.autonomo.salvarRelatorioConfig()" value="18:00"/>
+            <button class="btn-teste-rel" onclick="AT.tabs.autonomo.enviarTesteRelatorio()">🧪 Enviar teste</button>
+            <button class="btn-disparar-rel" onclick="AT.tabs.autonomo.enviarRelatorioAgora()">📊 Enviar agora</button>
+          </div>
+          <div style="color:var(--text-dim);font-size:12px;margin-top:8px;">Admins que recebem:</div>
+          <div class="admin-ids-chips" id="admin-ids-chips"></div>
+          <div class="add-admin-row"><input type="text" id="admin-id-novo" placeholder="chat_id (ex: 7065408791)"/><button onclick="AT.tabs.autonomo.adicionarAdminId('admin-ids-chips','admin-id-novo')">+ Adicionar</button></div>
+        </div>
+        <div class="relatorio-card">
+          <h3>📈 Relatório Semanal — Atividade</h3>
+          <div class="explica">Tabela com quantas mensagens cada agente enviou na semana (seg-dom).</div>
+          <div class="row">
+            <label><input type="checkbox" id="atv-ativo" onchange="AT.tabs.autonomo.salvarAtividadeConfig()"/> Ativo</label>
+            <label>⏰ Horários:</label><div class="horarios-chips" id="atv-horarios"></div>
+            <button type="button" class="btn-add-hora" onclick="AT.tabs.autonomo.adicionarHorarioAtividade()">+ hora</button>
+          </div>
+          <div class="row">
+            <button class="btn-teste-rel" onclick="AT.tabs.autonomo.enviarTesteAtividade()">🧪 Enviar teste</button>
+            <button class="btn-disparar-rel" onclick="AT.tabs.autonomo.enviarAtividadeAgora()">📈 Enviar agora</button>
+          </div>
+          <div style="color:var(--text-dim);font-size:12px;margin-top:8px;">Quem recebe:</div>
+          <div class="admin-ids-chips" id="atv-admin-ids"></div>
+          <div class="add-admin-row"><input type="text" id="atv-admin-novo" placeholder="chat_id"/><button onclick="AT.tabs.autonomo.adicionarAdminId('atv-admin-ids','atv-admin-novo')">+ Adicionar</button></div>
+        </div>
+        <div class="relatorio-card">
+          <h3>🔴 Alertas de Inatividade</h3>
+          <div class="explica">Avisa os admins quando algum agente "sumiu" (não envia msg há mais de X minutos comerciais).</div>
+          <div class="row">
+            <label><input type="checkbox" id="inat-ativo" onchange="AT.tabs.autonomo.salvarInatConfig()"/> Ativo</label>
+            <label>⏱️ Sumiu há:</label>
+            <input type="number" id="inat-sumiu-minutos" min="10" max="600" step="5" value="60" onchange="AT.tabs.autonomo.salvarInatConfig()" style="width:70px;background:var(--panel-2);border:1px solid var(--border);color:var(--text);padding:4px 8px;border-radius:5px;font-size:12px;font-family:inherit;"/>
+            <span style="color:var(--text-dim);font-size:11px;">minutos comerciais</span>
+            <button class="btn-teste-rel" onclick="AT.tabs.autonomo.enviarTesteInat()">🧪 Testar</button>
+            <button class="btn-teste-rel" onclick="AT.tabs.autonomo.resetInat()" style="border-color:var(--text-dim);color:var(--text-dim);background:transparent;">🔄 Reset estado</button>
+          </div>
+          <div style="color:var(--text-dim);font-size:12px;margin-top:8px;">Admins que recebem:</div>
+          <div class="admin-ids-chips" id="inat-admin-ids"></div>
+          <div class="add-admin-row"><input type="text" id="inat-admin-novo" placeholder="chat_id"/><button onclick="AT.tabs.autonomo.adicionarAdminId('inat-admin-ids','inat-admin-novo')">+ Adicionar</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-telegram">
+      <h2>✈️ Telegram</h2>
+      <p class="subtitle">Status do bot e vínculos de agentes.</p>
+      <div id="tg-container">
+        <div id="tg-status-bar" class="tg-status-bar"><p class="loading">Carregando…</p></div>
+        <div id="tg-offline-warn" class="tg-offline-warn" style="display: none;">
+          ⚠️ <b>Bot offline.</b> Para ativar:<br>
+          1. Configure <code>TELEGRAM_BOT_TOKEN</code> no arquivo <code>.env</code><br>
+          2. Se o v1 tá rodando com o mesmo token, <b>pare o v1</b> primeiro<br>
+          3. Reinicie o v2
+        </div>
+        <div class="tg-stats">
+          <div class="tg-stat"><div class="s-label">📡 Status</div><div class="s-valor" id="tg-stat-online">—</div></div>
+          <div class="tg-stat"><div class="s-label">✅ Vinculados</div><div class="s-valor" id="tg-stat-vinculados">0</div></div>
+          <div class="tg-stat pendentes"><div class="s-label">⏳ Pendentes</div><div class="s-valor" id="tg-stat-pendentes">0</div></div>
+        </div>
+        <div id="tg-secao-pendentes" class="tg-secao" style="display: none;">
+          <div class="tg-secao-header"><span class="tg-secao-titulo">⏳ Pendentes de vínculo</span><span class="tg-secao-contador" id="tg-cnt-pendentes">0</span></div>
+          <div id="tg-lista-pendentes"></div>
+        </div>
+        <div class="tg-secao">
+          <div class="tg-secao-header">
+            <span class="tg-secao-titulo">✅ Agentes vinculados</span>
+            <span class="tg-secao-contador" id="tg-cnt-vinculados">0</span>
+            <div class="tg-busca"><input type="text" placeholder="🔍 Buscar por nome, username ou chat_id..." oninput="AT.tabs.telegram.filtrar(this.value)" /></div>
+          </div>
+          <div id="tg-lista-vinculados"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-agentes">
+      <h2>👥 Agentes</h2>
+      <p class="subtitle">Gerencie quais agentes entram nos relatórios. Todos entram por padrão.</p>
+      <div class="ag-info">ℹ️ Os agentes <b>desativados</b> aqui não aparecerão nos relatórios de <b>Casos sem resposta</b> nem de <b>Análise Agentes</b>.</div>
+      <div class="ag-stats">
+        <div class="ag-stat"><div class="s-label">👥 Total</div><div class="s-valor" id="ag-stat-total">0</div></div>
+        <div class="ag-stat incluidos"><div class="s-label">✅ Incluídos</div><div class="s-valor" id="ag-stat-incluidos">0</div></div>
+        <div class="ag-stat excluidos"><div class="s-label">❌ Excluídos</div><div class="s-valor" id="ag-stat-excluidos">0</div></div>
+      </div>
+      <div class="ag-controles"><input type="text" placeholder="🔍 Buscar por nome ou email..." oninput="AT.tabs.agentes.filtrar(this.value)"></div>
+      <div id="ag-lista"></div>
+    </section>
+
+  </main>
+</div>
+
+<div class="modal-bg" id="modal-notas">
+  <div class="modal">
+    <h3 id="modal-notas-titulo">Notas</h3>
+    <div id="lista-notas" style="margin-bottom: 14px;"></div>
+    <textarea id="nova-nota-txt" placeholder="Escreva uma nota..."></textarea>
+    <div class="modal-footer">
+      <button onclick="AT.tabs.casos.fecharModal('modal-notas')">Fechar</button>
+      <button class="primary" onclick="AT.tabs.casos.adicionarNota()">+ Adicionar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal-resumo">
+  <div class="modal">
+    <h3 id="modal-resumo-titulo">Resumo da conversa</h3>
+    <div id="resumo-conteudo" style="display: flex; flex-direction: column;"></div>
+    <div class="modal-footer"><button onclick="AT.tabs.casos.fecharModal('modal-resumo')">Fechar</button></div>
+  </div>
+</div>
+
+<script>
+  ['modal-notas', 'modal-resumo'].forEach(id => {
+    document.getElementById(id).addEventListener('click', e => {
+      if (e.target.id === id) document.getElementById(id).classList.remove('show');
+    });
+  });
+</script>
+
+<script src="js/api.js"></script>
+<script src="js/core.js"></script>
+<script src="js/tabs/ranking.js"></script>
+<script src="js/tabs/casos.js"></script>
+<script src="js/tabs/historico.js"></script>
+<script src="js/tabs/jornada.js"></script>
+<script src="js/tabs/comparar.js"></script>
+<script src="js/tabs/sem-atividade.js"></script>
+<script src="js/tabs/relatorios.js"></script>
+<script src="js/tabs/agentes.js"></script>
+<script src="js/tabs/fila.js"></script>
+<script src="js/tabs/duplicados.js"></script>
+<script src="js/tabs/telegram.js"></script>
+<script src="js/tabs/autonomo.js"></script>
+<script src="js/demo.js"></script>
+
+</body>
+</html>

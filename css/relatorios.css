@@ -1,0 +1,125 @@
+/* public/css/relatorios.css */
+
+.rel-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 8px;
+}
+
+@media (max-width: 1000px) {
+  .rel-grid { grid-template-columns: 1fr; }
+}
+
+.rel-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.rel-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--orange);
+}
+
+.rel-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.rel-card .rel-desc {
+  color: var(--text-dim);
+  font-size: 12px;
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+
+.rel-card .rel-botoes {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.rel-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border-2);
+  background: var(--panel-2);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.15s;
+  text-decoration: none;
+}
+
+.rel-btn:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: white;
+  text-decoration: none;
+}
+
+.rel-btn.primary {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: white;
+}
+
+.rel-btn.primary:hover {
+  background: #d35400;
+  border-color: #d35400;
+}
+
+.rel-meta {
+  background: rgba(230, 126, 34, 0.08);
+  border: 1px solid rgba(230, 126, 34, 0.25);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+}
+
+.rel-meta b { color: var(--orange); }
+/* ADICIONAR no final do public/css/relatorios.css */
+
+.rel-opcoes {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.rel-campo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rel-campo input[type="date"] {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.rel-campo input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.6);
+  cursor: pointer;
+}

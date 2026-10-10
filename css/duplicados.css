@@ -1,0 +1,307 @@
+/* public/css/duplicados.css */
+
+.dup-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.dup-stat {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 14px 16px;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.dup-stat::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+}
+
+.dup-stat.warn::before { background: var(--red); }
+
+.dup-stat .s-label {
+  color: var(--text-dim);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.dup-stat .s-valor {
+  font-size: 24px;
+  font-weight: 800;
+  font-family: 'Monaco', 'Consolas', monospace;
+  color: var(--text);
+}
+
+.dup-stat.warn .s-valor { color: var(--red); }
+
+/* Card do cliente duplicado */
+.dup-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.dup-card:hover {
+  border-color: var(--border-2);
+}
+
+.dup-card-header {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.dup-card.open .dup-card-header {
+  background: var(--panel-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.dup-cliente-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.dup-cliente-nome {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.dup-cliente-contato {
+  color: var(--text-dim);
+  font-size: 11px;
+  font-family: 'Monaco', 'Consolas', monospace;
+}
+
+.dup-badges {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.dup-badge {
+  padding: 3px 10px;
+  border-radius: 14px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'Monaco', 'Consolas', monospace;
+}
+
+.dup-badge.total {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.dup-badge.com {
+  background: rgba(46, 204, 113, 0.15);
+  border: 1px solid rgba(46, 204, 113, 0.3);
+  color: var(--green);
+}
+
+.dup-badge.sem {
+  background: rgba(255, 71, 87, 0.15);
+  border: 1px solid rgba(255, 71, 87, 0.3);
+  color: var(--red);
+}
+
+.dup-arrow {
+  color: var(--text-dim);
+  transition: transform 0.2s;
+  font-size: 12px;
+}
+
+.dup-card.open .dup-arrow {
+  transform: rotate(90deg);
+}
+
+.dup-conversas {
+  display: none;
+  padding: 10px 16px 14px;
+}
+
+.dup-card.open .dup-conversas {
+  display: block;
+}
+
+.dup-conversa-linha {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--border);
+  font-size: 12px;
+}
+
+.dup-conversa-linha:last-child {
+  border-bottom: none;
+}
+
+.dup-conversa-id {
+  font-family: 'Monaco', 'Consolas', monospace;
+  color: var(--accent);
+  font-weight: 600;
+  min-width: 70px;
+}
+
+.dup-conversa-agente {
+  flex: 1;
+  color: var(--text);
+}
+
+.dup-conversa-agente .sem {
+  color: var(--red);
+  font-style: italic;
+}
+
+.dup-conversa-data {
+  color: var(--text-dim);
+  font-family: 'Monaco', 'Consolas', monospace;
+  font-size: 11px;
+}
+
+.dup-conversa-link {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 11px;
+}
+
+.dup-conversa-link:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+  text-decoration: none;
+}
+
+
+
+
+/* v2.8: Consolidar estilo v1 */
+.dup-consolidar-box {
+  margin-top: 12px;
+  background: rgba(230, 126, 34, 0.06);
+  border: 1px solid rgba(230, 126, 34, 0.25);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+
+.dup-consolidar-aviso {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.dup-consolidar-aviso b {
+  color: var(--text);
+}
+
+.dup-consolidar-aviso b.agente-nome {
+  color: var(--orange);
+  font-weight: 700;
+}
+
+.dup-consolidar-aviso.ok {
+  background: rgba(138, 148, 168, 0.08);
+  border: 1px solid var(--border);
+  padding: 12px 16px;
+  border-radius: 6px;
+  text-align: center;
+  margin-top: 12px;
+  color: var(--text-dim);
+  margin-bottom: 0;
+}
+
+.dup-consolidar-aviso.warn {
+  background: rgba(245, 197, 24, 0.08);
+  border: 1px solid rgba(245, 197, 24, 0.3);
+  padding: 14px 16px;
+  border-radius: 6px;
+  margin-top: 12px;
+  color: var(--yellow);
+  margin-bottom: 0;
+}
+
+.dup-consolidar-aviso.warn b { color: var(--yellow); }
+
+.dup-btn-consolidar {
+  width: 100%;
+  background: linear-gradient(180deg, var(--orange), #d35400);
+  border: 1px solid var(--orange);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.2s;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.dup-btn-consolidar:hover:not(:disabled) {
+  background: linear-gradient(180deg, #ff9640, #d35400);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(230, 126, 34, 0.35);
+}
+
+.dup-btn-consolidar:disabled {
+  cursor: wait;
+}
+
+.dup-btn-consolidar.confirmar {
+  background: linear-gradient(180deg, #e74c3c, #c0392b);
+  border-color: #c0392b;
+  animation: pulsar 1.2s ease-in-out infinite;
+}
+
+.dup-btn-consolidar.executando {
+  background: linear-gradient(180deg, #546e7a, #455a64);
+  border-color: #455a64;
+  opacity: 0.9;
+}
+
+.dup-btn-consolidar.sucesso {
+  background: linear-gradient(180deg, var(--green), #27ae60);
+  border-color: #27ae60;
+  animation: none;
+}
+
+.dup-btn-consolidar.parcial {
+  background: linear-gradient(180deg, var(--yellow), #e5b000);
+  border-color: #e5b000;
+  color: #1a1f2e;
+}
+
+.dup-btn-consolidar.erro {
+  background: linear-gradient(180deg, var(--red), #c0392b);
+  border-color: #c0392b;
+}
+
+@keyframes pulsar {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(231, 76, 60, 0); }
+}

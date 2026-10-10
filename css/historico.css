@@ -1,0 +1,145 @@
+/* public/css/historico.css
+   Gráficos de barras + linha da aba Histórico. */
+
+.grafico-wrapper {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.grafico-wrapper h3 {
+  font-size: 12px;
+  margin-bottom: 20px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+/* Gráfico de barras */
+.barras {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 200px;
+  padding-bottom: 30px;
+  position: relative;
+}
+
+.barra-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  min-width: 20px;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.barra {
+  width: 100%;
+  background: linear-gradient(180deg, var(--accent), rgba(79, 158, 255, 0.5));
+  border-radius: 3px 3px 0 0;
+  min-height: 2px;
+  transition: all 0.15s;
+  cursor: pointer;
+}
+
+.barra:hover {
+  background: linear-gradient(180deg, var(--green), rgba(46, 204, 113, 0.5));
+}
+
+.barra-label {
+  position: absolute;
+  bottom: -28px;
+  font-size: 10px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  transform: rotate(-45deg);
+  transform-origin: top left;
+  left: 50%;
+}
+
+.barra-valor {
+  position: absolute;
+  top: -18px;
+  font-size: 10px;
+  color: var(--text);
+  font-weight: 700;
+  font-family: 'Monaco', 'Consolas', monospace;
+}
+
+/* Gráfico de linha (SVG) */
+.linha-grafico {
+  width: 100%;
+  height: 240px;
+  display: block;
+}
+
+/* Legenda */
+.grafico-legenda {
+  display: flex;
+  gap: 20px;
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 8px;
+  justify-content: center;
+}
+
+.legenda-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legenda-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.legenda-dot.msgs { background: var(--accent); }
+.legenda-dot.convs { background: var(--green); }
+
+/* Tooltip flutuante (renderizado por JS) */
+#hist-tooltip {
+  position: fixed;
+  background: var(--panel);
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: var(--text);
+  pointer-events: none;
+  display: none;
+  z-index: 9999;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
+}
+
+/* Container do controle de período */
+.historico-controles {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.historico-controles select {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 7px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.historico-controles select:focus {
+  outline: none;
+  border-color: var(--accent);
+}

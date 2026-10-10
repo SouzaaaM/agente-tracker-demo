@@ -1,0 +1,129 @@
+/* public/css/sem-atividade.css */
+
+.sa-controles {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.sa-controles select {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 7px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.sa-info {
+  background: rgba(79, 158, 255, 0.08);
+  border: 1px solid rgba(79, 158, 255, 0.25);
+  border-radius: 6px;
+  padding: 12px 14px;
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 20px;
+}
+
+.sa-info b { color: var(--accent); }
+
+.sa-grupo {
+  margin-bottom: 24px;
+}
+
+.sa-grupo-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.sa-grupo-titulo {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.sa-grupo-titulo.vermelho { color: var(--red); }
+.sa-grupo-titulo.laranja { color: var(--orange); }
+
+.sa-contador {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2px 10px;
+  font-size: 12px;
+  color: var(--text-dim);
+  font-family: 'Monaco', 'Consolas', monospace;
+}
+
+.sa-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: border-color 0.15s;
+}
+
+.sa-card:hover {
+  border-color: var(--border-2);
+}
+
+.sa-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.sa-avatar.vermelho {
+  background: rgba(255, 71, 87, 0.15);
+  color: var(--red);
+  border: 1px solid var(--red);
+}
+
+.sa-avatar.laranja {
+  background: rgba(255, 140, 66, 0.15);
+  color: var(--orange);
+  border: 1px solid var(--orange);
+}
+
+.sa-info-pessoa {
+  flex: 1;
+  min-width: 0;
+}
+
+.sa-nome {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.sa-detalhe {
+  color: var(--text-dim);
+  font-size: 12px;
+  font-family: 'Monaco', 'Consolas', monospace;
+}
+
+.sa-fora-horario {
+  background: rgba(245, 197, 24, 0.1);
+  border: 1px solid rgba(245, 197, 24, 0.3);
+  color: var(--yellow);
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}

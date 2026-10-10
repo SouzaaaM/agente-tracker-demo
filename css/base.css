@@ -1,0 +1,143 @@
+/* public/css/base.css
+   Variáveis globais, reset e layout principal.
+   Tema escuro moderno inspirado no rascunho do cliente. */
+
+:root {
+  /* Backgrounds */
+  --bg: #0a0e15;
+  --panel: #131824;
+  --panel-2: #1a2030;
+  --panel-3: #242b3d;
+  --border: #262d3d;
+  --border-2: #333a4d;
+
+  /* Texto */
+  --text: #e8ecf4;
+  --text-dim: #8a94a8;
+  --text-muted: #5a6278;
+
+  /* Cores de status/acentos */
+  --accent: #4f9eff;
+  --accent-2: #6fb0ff;
+  --purple: #8b7cff;
+  --green: #2ecc71;
+  --yellow: #f5c518;
+  --orange: #ff8c42;
+  --red: #ff4757;
+  --telegram: #38bdf8;
+  --clickbank: #c0392b;
+  --ia: #8b7cff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+/* Layout: sidebar + main */
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  height: 100vh;
+}
+
+main {
+  overflow-y: auto;
+  padding: 28px 32px;
+}
+
+/* Tipografia de aba */
+main h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  color: var(--text-dim);
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+
+/* Seções (abas) */
+section {
+  display: none;
+}
+
+section.active {
+  display: block;
+}
+
+/* Scrollbar customizada */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-2);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-dim);
+}
+
+/* Estados comuns */
+.empty {
+  text-align: center;
+  color: var(--text-dim);
+  padding: 60px 20px;
+}
+
+.empty .emoji {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.6;
+}
+
+.loading {
+  color: var(--text-dim);
+  font-style: italic;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Botões comuns */
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input, select, textarea {
+  font-family: inherit;
+  font-size: 13px;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

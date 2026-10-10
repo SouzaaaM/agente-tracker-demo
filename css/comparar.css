@@ -1,0 +1,131 @@
+/* public/css/comparar.css
+   Aba Comparar agentes (2-4 cards lado a lado). */
+
+.comparar-controles {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.comparar-controles select {
+  min-width: 220px;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: inherit;
+}
+
+.comparar-controles button {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.15s;
+}
+
+.comparar-controles button:hover {
+  border-color: var(--border-2);
+}
+
+.comparar-controles button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.comparar-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.chip-selecionado {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(79, 158, 255, 0.15);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 5px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.chip-selecionado .remover {
+  cursor: pointer;
+  opacity: 0.7;
+  font-weight: 700;
+  padding: 0 2px;
+}
+
+.chip-selecionado .remover:hover { opacity: 1; }
+
+/* Grid de cards */
+.comparar-grid {
+  display: grid;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.comparar-grid.cols-1 { grid-template-columns: 1fr; }
+.comparar-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.comparar-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.comparar-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 1100px) {
+  .comparar-grid.cols-3, .comparar-grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+.comparar-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  position: relative;
+  overflow: hidden;
+}
+
+.comparar-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+}
+
+.comparar-card h3 {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+
+.comparar-card .stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 0;
+  font-size: 13px;
+}
+
+.comparar-card .stat-label {
+  color: var(--text-dim);
+}
+
+.comparar-card .stat-val {
+  font-weight: 700;
+  font-family: 'Monaco', 'Consolas', monospace;
+}

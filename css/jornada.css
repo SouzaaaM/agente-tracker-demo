@@ -1,0 +1,188 @@
+/* public/css/jornada.css
+   Visualização da jornada semanal de um agente. */
+
+.jornada-controles {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.jornada-controles select {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 7px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.jornada-controles select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* Card de dia */
+.jornada-dia {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.jornada-dia::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent);
+}
+
+.jornada-dia.vazio {
+  opacity: 0.45;
+}
+
+.jornada-dia.vazio::before {
+  background: var(--border-2);
+}
+
+.jornada-dia-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.jornada-dia-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.jornada-dia-label .dia-semana {
+  color: var(--accent);
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+.jornada-dia-stats {
+  color: var(--text-dim);
+  font-size: 12px;
+  font-family: 'Monaco', 'Consolas', monospace;
+}
+
+/* 3 boxes de stats (primeira, última, msgs) */
+.jornada-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.jornada-stat-box {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+  border-radius: 6px;
+}
+
+.jornada-stat-box .jsb-label {
+  color: var(--text-dim);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.jornada-stat-box .jsb-valor {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  font-family: 'Monaco', 'Consolas', monospace;
+}
+
+/* Períodos (buracos e almoço) */
+.jornada-periodos {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.periodo-item {
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-family: 'Monaco', 'Consolas', monospace;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.periodo-item.buraco {
+  background: rgba(255, 71, 87, 0.08);
+  border-left: 3px solid var(--red);
+  color: var(--red);
+}
+
+.periodo-item.almoco {
+  background: rgba(245, 197, 24, 0.08);
+  border-left: 3px solid var(--yellow);
+  color: var(--yellow);
+}
+
+/* Toggle de horários */
+.horarios-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-dim);
+  transition: all 0.15s;
+}
+
+.horarios-toggle:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.horarios-lista {
+  margin-top: 10px;
+  padding: 12px;
+  background: rgba(46, 204, 113, 0.04);
+  border: 1px solid rgba(46, 204, 113, 0.2);
+  border-radius: 6px;
+  display: none;
+}
+
+.horarios-lista.show {
+  display: block;
+}
+
+.horarios-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.hora-chip {
+  background: rgba(46, 204, 113, 0.15);
+  color: var(--green);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-family: 'Monaco', 'Consolas', monospace;
+}

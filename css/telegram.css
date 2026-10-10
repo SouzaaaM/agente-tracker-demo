@@ -1,0 +1,330 @@
+/* public/css/telegram.css */
+
+.tg-status-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+  flex-wrap: wrap;
+}
+
+.tg-status-bar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--telegram);
+}
+
+.tg-status-bar.offline::before { background: var(--red); }
+
+.tg-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.tg-dot.online {
+  background: var(--green);
+  box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+  animation: pulsarTg 2s infinite;
+}
+
+.tg-dot.offline { background: var(--red); }
+
+@keyframes pulsarTg {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(46, 204, 113, 0); }
+}
+
+.tg-bot-info {
+  flex: 1;
+  min-width: 200px;
+}
+
+.tg-bot-nome {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.tg-bot-user {
+  font-family: 'Monaco', 'Consolas', monospace;
+  font-size: 12px;
+  color: var(--telegram);
+}
+
+.tg-link-bot {
+  background: var(--telegram);
+  color: white !important;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.tg-link-bot:hover {
+  background: #0ea5e9;
+  text-decoration: none;
+}
+
+.tg-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tg-stat {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.tg-stat::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--telegram);
+}
+
+.tg-stat.pendentes::before { background: var(--yellow); }
+.tg-stat.inativos::before { background: var(--text-dim); }
+
+.tg-stat .s-label {
+  color: var(--text-dim);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.tg-stat .s-valor {
+  font-size: 22px;
+  font-weight: 800;
+  font-family: 'Monaco', 'Consolas', monospace;
+  color: var(--text);
+}
+
+.tg-stat.pendentes .s-valor { color: var(--yellow); }
+
+.tg-secao {
+  margin-bottom: 24px;
+}
+
+.tg-secao-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.tg-secao-titulo {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text);
+}
+
+.tg-secao-contador {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2px 10px;
+  font-size: 11px;
+  font-family: 'Monaco', 'Consolas', monospace;
+  color: var(--text-dim);
+}
+
+.tg-busca {
+  flex: 1;
+  max-width: 320px;
+  margin-left: auto;
+}
+
+.tg-busca input {
+  width: 100%;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 7px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+/* Card de vinculado */
+.tg-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: border-color 0.15s;
+  flex-wrap: wrap;
+}
+
+.tg-card:hover {
+  border-color: var(--border-2);
+}
+
+.tg-card.inativo {
+  opacity: 0.55;
+}
+
+.tg-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--telegram), #0284c7);
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tg-card.pendente .tg-avatar {
+  background: linear-gradient(135deg, var(--yellow), #c49b00);
+}
+
+.tg-info {
+  flex: 1;
+  min-width: 180px;
+}
+
+.tg-nome {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text);
+  margin-bottom: 1px;
+}
+
+.tg-nome .ag-nome-real {
+  color: var(--text);
+}
+
+.tg-nome .ag-nome-tg {
+  color: var(--text-dim);
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.tg-meta {
+  color: var(--text-dim);
+  font-size: 10px;
+  font-family: 'Monaco', 'Consolas', monospace;
+}
+
+.tg-meta a {
+  color: var(--telegram);
+}
+
+.tg-acoes {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.tg-btn {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 11px;
+  font-family: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  transition: all 0.12s;
+}
+
+.tg-btn:hover {
+  border-color: var(--border-2);
+  text-decoration: none;
+}
+
+.tg-btn.testar {
+  background: rgba(56, 189, 248, 0.1);
+  border-color: var(--telegram);
+  color: var(--telegram);
+}
+
+.tg-btn.testar:hover { background: var(--telegram); color: white; }
+
+.tg-btn.desvincular:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: white;
+}
+
+.tg-btn.vincular {
+  background: var(--green);
+  border-color: var(--green);
+  color: white;
+}
+
+.tg-btn.vincular:hover { background: #27ae60; border-color: #27ae60; }
+
+.tg-btn.descartar {
+  color: var(--text-dim);
+}
+
+.tg-btn.descartar:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: white;
+}
+
+.tg-pendente-select {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 5px 8px;
+  border-radius: 5px;
+  font-size: 11px;
+  min-width: 180px;
+  font-family: inherit;
+}
+
+.tg-offline-warn {
+  background: rgba(255, 71, 87, 0.1);
+  border: 1px solid rgba(255, 71, 87, 0.3);
+  color: var(--red);
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.tg-offline-warn b { color: var(--red); font-weight: 700; }
+
+.tg-offline-warn code {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: 'Monaco', 'Consolas', monospace;
+  font-size: 11px;
+}

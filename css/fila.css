@@ -1,0 +1,181 @@
+/* public/css/fila.css */
+
+.fila-controles {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.fila-controles select {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 7px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.fila-dia-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.fila-dia-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+}
+
+.fila-dia-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.fila-dia-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.fila-dia-label .dia-semana {
+  color: var(--accent);
+  margin-right: 6px;
+}
+
+.fila-dia-total {
+  font-family: 'Monaco', 'Consolas', monospace;
+  background: rgba(79, 158, 255, 0.15);
+  color: var(--accent);
+  padding: 3px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.fila-times {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px;
+}
+
+.fila-time-item {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fila-time-nome {
+  color: var(--text-dim);
+  font-size: 12px;
+}
+
+.fila-time-valor {
+  font-weight: 700;
+  font-family: 'Monaco', 'Consolas', monospace;
+  color: var(--text);
+}
+
+/* ─── Botão olho ──────────────────────────────────────────── */
+.fila-cat-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  justify-content: flex-end;
+}
+
+.fila-cat-toggle-label {
+  font-size: 11px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-olho {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  transition: background 0.15s;
+}
+
+.btn-olho:hover {
+  background: var(--panel);
+}
+
+/* ─── Badges de categoria ─────────────────────────────────── */
+.fila-categorias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 10px;
+  margin-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.fila-cat-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px 4px 8px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.fila-cat-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.fila-cat-badge.clickbank {
+  background: rgba(255, 165, 0, 0.12);
+  border: 1px solid rgba(255, 165, 0, 0.3);
+  color: #ffa500;
+}
+.fila-cat-badge.clickbank .fila-cat-dot { background: #ffa500; }
+
+.fila-cat-badge.ia {
+  background: rgba(79, 158, 255, 0.12);
+  border: 1px solid rgba(79, 158, 255, 0.3);
+  color: #4f9eff;
+}
+.fila-cat-badge.ia .fila-cat-dot { background: #4f9eff; }
+
+.fila-cat-badge.organico {
+  background: rgba(46, 204, 113, 0.12);
+  border: 1px solid rgba(46, 204, 113, 0.3);
+  color: #2ecc71;
+}
+.fila-cat-badge.organico .fila-cat-dot { background: #2ecc71; }
+
+.fila-cat-nome {
+  color: inherit;
+  opacity: 0.85;
+}
+
+.fila-cat-valor {
+  font-weight: 700;
+  font-family: 'Monaco', 'Consolas', monospace;
+  font-size: 13px;
+}
